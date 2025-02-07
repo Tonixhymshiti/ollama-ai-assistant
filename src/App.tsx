@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './index.css';
 import { ChatView } from './components/ChatView';
-import { postGenerateCompletion } from './services/api';
+import {  postGenerateCompletion } from './services/api';
 
-const model = 'llama3.2:1b';
+const LLM_MODEL: string = import.meta.env.VITE_LLM_MODEL as string || 'llama3.2:1b'
 
 const App: React.FC = () => {
   const [chat, setChat] = useState<{ prompt: string; res: string }[]>([]);
@@ -14,7 +14,7 @@ const App: React.FC = () => {
 
   const sendPrompt = (prompt: string) => {
     updateState(prompt, '');
-    postGenerateCompletion({ prompt, model }).then((res) =>
+    postGenerateCompletion({ prompt, model: LLM_MODEL }).then((res) =>
       updateState(prompt, res),
     );
   };
