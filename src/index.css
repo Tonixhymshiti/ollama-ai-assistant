@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+html, body, #root, .App {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+}
+
+.chat-history {
+  padding: 2rem;
+  width: 240px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  flex-shrink: 0;
+}
+
+.chat {
+  flex: 1 1 auto;
+  padding: 2rem;
+  background-color: #fff;
+  display:flex;
+  justify-content: center;
+}
+
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 45rem;
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  margin-top: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.input-box {
+  display: flex;
+  width: 100%;
+}
+
+.input-box textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+}
+
+.chat-bubble {
+  width: 70%;
+  display: flex;
+}
+
+.chat-bubble--user {
+  align-self: start;
+}
+
+.chat-bubble--assistant {
+  align-self: end;
+}
