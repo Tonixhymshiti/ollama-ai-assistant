@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import './index.css';
-import { ChatView } from './components/ChatView';
-import {  postGenerateCompletion } from './services/api';
+import { ChatView } from './components/Chat';
+import { postGenerateCompletion } from './services/api';
 
-const LLM_MODEL: string = import.meta.env.VITE_LLM_MODEL as string || 'llama3.2:1b'
+const LLM_MODEL: string =
+  (import.meta.env.VITE_LLM_MODEL as string) || 'llama3.2:1b';
 
 const App: React.FC = () => {
-  const [chat, setChat] = useState<{ prompt: string; res: string }[]>([]);
+  const [chat, setChat] = useState<{ message: string; isUser: boolean }[]>([]);
 
-  const updateState = (prompt: string, res: string) => {
-    setChat([...chat, { prompt, res }]);
+  const updateState = (message: string, isUser = true) => {
+    setChat((chat) => [...chat, { message, isUser }]);
   };
 
   const sendPrompt = (prompt: string) => {
-    updateState(prompt, '');
+    updateState(prompt);
     postGenerateCompletion({ prompt, model: LLM_MODEL }).then((res) =>
-      updateState(prompt, res),
+      updateState(res, false),
     );
   };
 
