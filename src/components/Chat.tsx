@@ -12,7 +12,7 @@ export const ChatView = ({ chat, onSubmit }: Props) => {
     <div className="chat">
       <div className="chat-wrapper">
         <div className="header">
-          <h2>Assitant powered by Ollama</h2>
+          <h2>Assistant powered by Ollama</h2>
         </div>
         <ChatBox chat={chat} />
         <ChatInput onSubmit={onSubmit} />
