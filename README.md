@@ -1,6 +1,6 @@
-# Ollama chat assistant
+# Ollama AI assistant
 
-A minimalistic web app chat assistant powered by ollama.
+A minimalistic web-based AI assistant powered by ollama.
 
 # Getting started
 
