@@ -8,6 +8,7 @@ const LLM_MODEL: string =
 
 const App: React.FC = () => {
   const [chat, setChat] = useState<{ message: string; isUser: boolean }[]>([]);
+  const [loading, setIsLoading] = useState(false);
 
   const updateState = (message: string, isUser = true) => {
     setChat((chat) => [...chat, { message, isUser }]);
@@ -15,8 +16,11 @@ const App: React.FC = () => {
 
   const sendPrompt = (prompt: string) => {
     updateState(prompt);
-    postGenerateCompletion({ prompt, model: LLM_MODEL }).then((res) =>
+    setIsLoading(true)
+    postGenerateCompletion({ prompt, model: LLM_MODEL }).then((res) => {
       updateState(res, false),
+      setIsLoading(false);
+    }
     );
   };
 
@@ -24,7 +28,7 @@ const App: React.FC = () => {
     <div className="App">
       <div className="container">
         {/* <ChatHistory/> */}
-        <ChatView chat={chat} onSubmit={sendPrompt} />
+        <ChatView chat={chat} onSubmit={sendPrompt} isResLoading={loading}/>
       </div>
     </div>
   );
