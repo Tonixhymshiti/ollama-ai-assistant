@@ -25,11 +25,12 @@ export const postGenerateCompletion = async (
     .then((response) => consumeStream(response));
 };
 
+
 export const consumeStream = async (response: Response): Promise<string> => {
   const reader = response.body?.getReader();
 
   if (!reader) {
-    throw Error('Could not access reader');
+    throw new Error('Could not access reader');
   }
 
   let text = '';
@@ -44,7 +45,8 @@ export const consumeStream = async (response: Response): Promise<string> => {
     const decodedValue = new TextDecoder().decode(value);
     const parsed = JSON.parse(decodedValue);
 
-    text = text + parsed.response;
+    text += parsed.response;
   }
+
   return text;
 };
