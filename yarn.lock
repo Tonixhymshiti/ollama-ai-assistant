@@ -449,7 +449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.27.0":
+"@eslint/js@npm:9.27.0, @eslint/js@npm:^9.27.0":
   version: 9.27.0
   resolution: "@eslint/js@npm:9.27.0"
   checksum: 79b219ceda79182732954b52f7a494f49995a9a6419c7ae0316866e324d3706afeb857e1306bb6f35a4caaf176a5174d00228fc93d36781a570d32c587736564
@@ -2924,6 +2924,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "my-react-app@workspace:."
   dependencies:
+    "@eslint/js": "npm:^9.27.0"
     "@types/react": "npm:19.0.0"
     "@types/react-dom": "npm:19.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.32.1"

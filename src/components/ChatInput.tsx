@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import type { ChangeEvent } from 'react';
 
 export const ChatInput = ({
   onSubmit,
@@ -7,7 +8,7 @@ export const ChatInput = ({
 }) => {
   const [input, setInput] = useState('');
 
-  const onInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   };
 
