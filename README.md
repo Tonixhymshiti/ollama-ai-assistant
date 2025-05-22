@@ -22,3 +22,11 @@ To start the app, run: `yarn dev`
 By default the App will use the `llama3.1:1b` model. You can override this by exporting the VITE_LLM_MODEL
 prior to executing the dev command:
 `VITE_LLM_MODEL=<desired_model>; yarn dev`
+
+## Linting
+
+To check the code for linting issues, run:
+`yarn lint`
+
+You can also try to automatically fix some linting issues by running:
+`yarn lint --fix`

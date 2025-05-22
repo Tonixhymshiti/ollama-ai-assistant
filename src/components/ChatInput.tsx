@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 export const ChatInput = ({
   onSubmit,
@@ -11,13 +11,13 @@ export const ChatInput = ({
     setInput(e.target.value);
   };
 
-  const onPromptSubmit = () => {
+  const onPromptSubmit = useCallback(() => {
     if (!input) {
       return;
     }
     onSubmit(input);
     setInput('');
-  };
+  }, [input, onSubmit]);
 
   useEffect(() => {
     const eventHandler = (event: KeyboardEvent) => {
@@ -28,7 +28,7 @@ export const ChatInput = ({
     window.addEventListener('keyup', eventHandler);
 
     return () => window.removeEventListener('keyup', eventHandler);
-  }, [input]);
+  }, [input, onPromptSubmit]);
 
   useEffect(() => {
     const eventHandler = (event: KeyboardEvent) => {

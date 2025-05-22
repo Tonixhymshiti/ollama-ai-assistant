@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { ChatInput } from './ChatInput';
 import { ChatBox } from './ChatBox';
 
