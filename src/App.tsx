@@ -18,7 +18,7 @@ const App: React.FC = () => {
     updateState(prompt);
     setIsLoading(true)
     postGenerateCompletion({ prompt, model: LLM_MODEL }).then((res) => {
-      updateState(res, false),
+      updateState(res, false);
       setIsLoading(false);
     }
     );
