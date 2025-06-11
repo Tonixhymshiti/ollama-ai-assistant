@@ -1,6 +1,7 @@
 # Ollama AI Assistant
 
-A minimalistic, web-based AI assistant powered by [Ollama](https://ollama.com/).  
+A minimalistic, web-based AI assistant powered by [Ollama](https://ollama.com/).
+
 **Ollama enables you to run large language models locally on your own machine—no cloud required, no data leaves your device.**  
 _Bring your own model and keep your data private!_
 
@@ -20,20 +21,20 @@ _Bring your own model and keep your data private!_
 
 ### 1. Set Up Ollama
 
-1. **Install Ollama:** [Installation Guide](https://github.com/ollama/ollama?tab=readme-ov-file#ollama)
-2. **Pull your desired model:**
+1. Install Ollama: [Installation Guide](https://github.com/ollama/ollama?tab=readme-ov-file#ollama)
+2. Pull your desired model:
    ```sh
    ollama pull <model>
    ```
-3. **Start the Ollama server:**
+3. Start the Ollama server:
    ```sh
    ollama serve
    ```
 
 ### 2. Set Up This Project
 
-1. **Install Node.js & Yarn**
-2. **Install dependencies:**
+1. Install Node.js & Yarn
+2. Install dependencies:
    ```sh
    yarn install
    ```
