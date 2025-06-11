@@ -44,18 +44,22 @@ class OllamaService {
   }
 }
 
-async function consumeStream(
+export async function consumeStream(
   response: Response,
   onToken: (token: string) => void,
 ): Promise<void> {
   const reader = response.body?.getReader();
+
   if (!reader) {
     throw new Error('Could not access reader');
   }
+
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
+
     const decodedValue = new TextDecoder().decode(value);
+
     try {
       const parsed = JSON.parse(decodedValue);
       onToken(parsed.response);
