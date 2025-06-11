@@ -1,17 +1,24 @@
-type Props = { chat: { message: string; isUser: boolean }[], isResLoading: boolean };
+import { isUserMessage } from "../utils/util";
+
+type Props = { chat: Message[], isResLoading: boolean };
+
+type Message = {
+  role: 'assistant' | 'user';
+  content: string
+};
 
 export const ChatBox = ({ chat, isResLoading }: Props) => {
   const msgList = chat?.map((item, i) => {
     return (
       <ChatBubble
         key={i}
-        msg={item.message}
-        role={item.isUser ? 'user' : 'assistant'}
+        msg={item.content}
+        role={item.role}
       />
     );
   });
 
-  const displayLoading = chat.length > 0 && chat[chat.length - 1].isUser && isResLoading;
+  const displayLoading = chat.length > 0 && isUserMessage(chat[chat.length - 1]) && isResLoading;
 
   return (
     <div className="chat-box">
