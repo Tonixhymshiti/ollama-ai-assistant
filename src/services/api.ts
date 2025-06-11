@@ -1,52 +1,72 @@
+import { OLLAMA_BASE_URL, LLM_MODEL } from './constants';
+
+interface ModelsResponse {
+  models: string[];
+}
+
 type PostGenerateParams = {
-  model: string;
   prompt: string;
+  model: string;
   context?: string;
 };
 
-const OLLAMA_BASE_URL = 'http://localhost:11434';
+class OllamaService {
+  private baseUrl: string;
 
-export const postGenerateCompletion = async (
-  parameters: PostGenerateParams,
-) => {
-  return fetch(`${OLLAMA_BASE_URL}/api/generate`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(parameters),
-  })
-    .then((response) => {
-      if (response.status > 300) {
-        throw Error('Api error');
-      }
-      return response;
-    })
-    .then((response) => consumeStream(response));
-};
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
 
+  public async getModels(): Promise<string[]> {
+    const response = await fetch(`${this.baseUrl}/api/models`);
+    if (response.status > 300) {
+      throw new Error(`Api error: ${response.status}`);
+    }
+    const data: ModelsResponse = await response.json();
+    return data.models;
+  }
 
-export const consumeStream = async (response: Response): Promise<string> => {
+  public async generateCompletion(
+    parameters: PostGenerateParams,
+    onToken: (token: string) => void,
+  ): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/api/generate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(parameters),
+    });
+    if (response.status > 300) {
+      throw new Error(`Api error: ${response.status}`);
+    }
+    return consumeStream(response, onToken);
+  }
+}
+
+export async function consumeStream(
+  response: Response,
+  onToken: (token: string) => void,
+): Promise<void> {
   const reader = response.body?.getReader();
 
   if (!reader) {
     throw new Error('Could not access reader');
   }
 
-  let text = '';
-
   while (true) {
     const { done, value } = await reader.read();
-
-    if (done) {
-      break;
-    }
+    if (done) break;
 
     const decodedValue = new TextDecoder().decode(value);
-    const parsed = JSON.parse(decodedValue);
 
-    text += parsed.response;
+    try {
+      const parsed = JSON.parse(decodedValue);
+      onToken(parsed.response);
+    } catch (e) {
+      throw new Error('Failed to parse response chunk');
+    }
   }
+}
 
-  return text;
-};
+export const ollamaService = new OllamaService(OLLAMA_BASE_URL);
