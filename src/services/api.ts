@@ -1,16 +1,11 @@
-import { OLLAMA_BASE_URL, LLM_MODEL } from './constants';
+import { OLLAMA_BASE_URL } from '../constants/constants';
+import { ChatRequestPayload, ChatResponsePayload } from '../types/chat';
 
 interface ModelsResponse {
   models: string[];
 }
 
-type PostGenerateParams = {
-  prompt: string;
-  model: string;
-  context?: string;
-};
-
-class OllamaService {
+export class OllamaService {
   private baseUrl: string;
 
   constructor(baseUrl: string) {
@@ -26,11 +21,11 @@ class OllamaService {
     return data.models;
   }
 
-  public async generateCompletion(
-    parameters: PostGenerateParams,
+  public async chat(
+    parameters: ChatRequestPayload,
     onToken: (token: string) => void,
   ): Promise<void> {
-    const response = await fetch(`${this.baseUrl}/api/generate`, {
+    const response = await fetch(`${this.baseUrl}/api/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,31 +35,31 @@ class OllamaService {
     if (response.status > 300) {
       throw new Error(`Api error: ${response.status}`);
     }
-    return consumeStream(response, onToken);
-  }
-}
-
-export async function consumeStream(
-  response: Response,
-  onToken: (token: string) => void,
-): Promise<void> {
-  const reader = response.body?.getReader();
-
-  if (!reader) {
-    throw new Error('Could not access reader');
+    return this.consumeStream(response, onToken);
   }
 
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
+  private async consumeStream(
+    response: Response,
+    onToken: (message: string) => void,
+  ): Promise<void> {
+    const reader = response.body?.getReader();
 
-    const decodedValue = new TextDecoder().decode(value);
+    if (!reader) {
+      throw new Error('Could not access reader');
+    }
 
-    try {
-      const parsed = JSON.parse(decodedValue);
-      onToken(parsed.response);
-    } catch (e) {
-      throw new Error('Failed to parse response chunk');
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const decodedValue = new TextDecoder().decode(value);
+
+      try {
+        const parsed = JSON.parse(decodedValue) as ChatResponsePayload;
+        onToken(parsed.message.content);
+      } catch (e) {
+        throw new Error('Failed to parse response chunk');
+      }
     }
   }
 }

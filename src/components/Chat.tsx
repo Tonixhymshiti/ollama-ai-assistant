@@ -1,8 +1,9 @@
 import { ChatInput } from './ChatInput';
 import { ChatBox } from './ChatBox';
+import { Message } from '../types/chat';
 
 type Props = {
-  chat: { message: string; isUser: boolean }[];
+  chat: Message[];
   onSubmit: (prompt: string) => void;
   isResLoading: boolean;
 };

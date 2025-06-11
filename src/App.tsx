@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import './index.css';
 import { ChatView } from './components/Chat';
-import { LLM_MODEL } from './services/constants';
+import { LLM_MODEL } from './constants/constants';
 import { ollamaService } from './services/api';
-
-type ChatMessage = { message: string; isUser: boolean };
+import { Message } from './types/chat';
+import { isUserMessage } from './utils/util';
 
 const App: React.FC = () => {
-  const [chat, setChat] = useState<ChatMessage[]>([]);
+  const [chat, setChat] = useState<Message[]>([]);
   const [loading, setIsLoading] = useState(false);
   const [model] = useState<string>(LLM_MODEL);
-
-  const updateState = (message: string, isUser = true) => {
-    setChat((chat) => [...chat, { message, isUser }]);
-  };
 
   const sendPrompt = (prompt: string) => {
     setChat((prevChat) => [
       ...prevChat,
-      { message: prompt, isUser: true },
-      { message: '', isUser: false }
+      { content: prompt, role: "user" },
+      { content: '', role: "assistant" }
     ]);
     setIsLoading(true);
 
@@ -29,19 +25,29 @@ const App: React.FC = () => {
         const lastMessageIndex = updatedChat.length - 1;
         console.log('lastMessageIndex', lastMessageIndex);
 
-        if (lastMessageIndex >= 0 && !updatedChat[lastMessageIndex].isUser) {
-          updatedChat[lastMessageIndex].message += token;
+        if (lastMessageIndex >= 0 && !isUserMessage(updatedChat[lastMessageIndex])) {
+          updatedChat[lastMessageIndex].content += token;
         }
         return updatedChat;
       });
     };
 
-    ollamaService.generateCompletion({ prompt, model }, onToken)
+    // Exclude the last item if it's a placeholder (assistant, empty message)
+    const chatForBackend =
+      chat.length > 0 && !isUserMessage(chat[chat.length - 1]) && chat[chat.length - 1].content === ''
+        ? chat.slice(0, -1)
+        : chat;
+    const messages = [
+      ...chatForBackend,
+      { role: 'user' as const, content: prompt }
+    ];
+
+    ollamaService.chat({ model, messages }, onToken)
       .then(() => setIsLoading(false))
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error('Error:', error);
         setIsLoading(false);
-        updateState('Error: could not generate response', false);
+        // updateState('Error: could not generate response', false);
       });
   };
 
