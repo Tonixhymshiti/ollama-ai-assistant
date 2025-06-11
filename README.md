@@ -4,7 +4,7 @@ A minimalistic, web-based AI assistant powered by [Ollama](https://ollama.com/).
 **Ollama enables you to run large language models locally on your own machine—no cloud required, no data leaves your device.**  
 _Bring your own model and keep your data private!_
 
-[![Watch the demo](https://drive.google.com/file/d/1So2LkN-vT8QHsldwYUiq27YjxEU_jfut/view)](https://drive.google.com/file/d/1So2LkN-vT8QHsldwYUiq27YjxEU_jfut/view)
+[Watch the demo](https://drive.google.com/file/d/1So2LkN-vT8QHsldwYUiq27YjxEU_jfut/view)
 
 ---
 
