@@ -1,32 +1,70 @@
-# Ollama AI assistant
+# Ollama AI Assistant
 
-A minimalistic web-based AI assistant powered by ollama.
+A minimalistic, web-based AI assistant powered by [Ollama](https://ollama.com/).  
+**Ollama enables you to run large language models locally on your own machine—no cloud required, no data leaves your device.**  
+_Bring your own model and keep your data private!_
 
-# Getting started
+[![Watch the demo](https://drive.google.com/file/d/1So2LkN-vT8QHsldwYUiq27YjxEU_jfut/view)](https://drive.google.com/file/d/1So2LkN-vT8QHsldwYUiq27YjxEU_jfut/view)
 
-## Setup ollama
-1. Install ollama: [link](https://github.com/ollama/ollama?tab=readme-ov-file#ollama)
-2. Pull the desired model: 
-    `ollama pull <model>`
-3. serve ollama:
-    `ollama serve`
+---
 
-## Setup project
-1. Install node && yarn
-2. Run `yarn install`
+## Why Ollama?
 
-## Start App
+- **Local-first:** All AI models run on your hardware—your data stays with you.
+- **Flexible:** Choose and switch between different open-source models.
+- **Private & Secure:** No third-party servers or cloud APIs involved.
 
-To start the app, run: `yarn dev`
+---
 
-By default the App will use the `llama3.1:1b` model. You can override this by exporting the VITE_LLM_MODEL
-prior to executing the dev command:
-`VITE_LLM_MODEL=<desired_model>; yarn dev`
+## Getting Started
+
+### 1. Set Up Ollama
+
+1. **Install Ollama:** [Installation Guide](https://github.com/ollama/ollama?tab=readme-ov-file#ollama)
+2. **Pull your desired model:**
+   ```sh
+   ollama pull <model>
+   ```
+3. **Start the Ollama server:**
+   ```sh
+   ollama serve
+   ```
+
+### 2. Set Up This Project
+
+1. **Install Node.js & Yarn**
+2. **Install dependencies:**
+   ```sh
+   yarn install
+   ```
+
+### 3. Start the App
+
+To launch the app, run:
+
+```sh
+yarn dev
+```
+
+By default, the app uses the `llama3.1:1b` model.  
+To use a different model, set the `VITE_LLM_MODEL` environment variable before starting:
+
+```sh
+VITE_LLM_MODEL=<desired_model> yarn dev
+```
+
+---
 
 ## Linting
 
 To check the code for linting issues, run:
-`yarn lint`
 
-You can also try to automatically fix some linting issues by running:
-`yarn lint --fix`
+```sh
+yarn lint
+```
+
+To automatically fix some linting issues:
+
+```sh
+yarn lint --fix
+```
