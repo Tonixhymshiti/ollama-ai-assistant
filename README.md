@@ -68,3 +68,7 @@ To automatically fix some linting issues:
 ```sh
 yarn lint --fix
 ```
+
+---
+
+**Note: this project is improving every day. Be patient in case of bugs xD!**
