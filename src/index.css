@@ -79,7 +79,9 @@ body,
 
 .model-select {
   width: 8rem;
-  padding: 0.2rem
+  padding: 0.2rem;
+  border: 2px solid var(--color-secondary);
+  background-color: var(--color-primary);
 }
 
 .chat-box {
