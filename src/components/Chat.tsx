@@ -32,7 +32,7 @@ export const ChatView = ({
           />
         </div>
         <ChatBox chat={chat} isResLoading={isResLoading} />
-        <ChatInput onSubmit={onSubmit} />
+        <ChatInput onSubmit={onSubmit} disabled={!selectedModel} />
       </div>
     </div>
   );

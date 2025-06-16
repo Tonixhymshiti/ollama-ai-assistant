@@ -3,8 +3,10 @@ import type { ChangeEvent } from 'react';
 
 export const ChatInput = ({
   onSubmit,
+  disabled,
 }: {
   onSubmit: (text: string) => void;
+  disabled?: boolean;
 }) => {
   const [input, setInput] = useState('');
 
@@ -48,6 +50,7 @@ export const ChatInput = ({
         onChange={onInputChange}
         value={input}
         placeholder="Type your message here..."
+        disabled={disabled}
       ></textarea>
     </div>
   );
