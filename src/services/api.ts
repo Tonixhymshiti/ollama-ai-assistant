@@ -1,9 +1,6 @@
 import { OLLAMA_BASE_URL } from '../constants/constants';
 import { ChatRequestPayload, ChatResponsePayload } from '../types/chat';
-
-interface ModelsResponse {
-  models: string[];
-}
+import { ListModelsResponse } from '../types/model';
 
 export class OllamaService {
   private baseUrl: string;
@@ -12,13 +9,13 @@ export class OllamaService {
     this.baseUrl = baseUrl;
   }
 
-  public async getModels(): Promise<string[]> {
-    const response = await fetch(`${this.baseUrl}/api/models`);
+  public async getModels(): Promise<ListModelsResponse> {
+    const response = await fetch(`${this.baseUrl}/api/tags`);
     if (response.status > 300) {
       throw new Error(`Api error: ${response.status}`);
     }
-    const data: ModelsResponse = await response.json();
-    return data.models;
+    const data: ListModelsResponse = await response.json();
+    return data;
   }
 
   public async chat(
