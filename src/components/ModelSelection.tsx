@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react';
+
 export const ModelSelection = ({
   models,
   selectedModel,
@@ -7,7 +9,7 @@ export const ModelSelection = ({
   selectedModel: string;
   onSelect?: (model: string) => void;
 }) => {
-  const onElementSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onElementSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     const model = event.target.value;
     onSelect(model);
   };

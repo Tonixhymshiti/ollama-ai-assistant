@@ -54,7 +54,7 @@ export class OllamaService {
       try {
         const parsed = JSON.parse(decodedValue) as ChatResponsePayload;
         onToken(parsed.message.content);
-      } catch (e) {
+      } catch {
         throw new Error('Failed to parse response chunk');
       }
     }

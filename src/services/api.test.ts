@@ -4,18 +4,25 @@ import { OllamaService } from './api';
 const BASE_URL = 'http://localhost:11434';
 
 // Patch fetch on the globalThis object for browser-like environments
-(globalThis as any).fetch = vi.fn();
+(globalThis.fetch as unknown as {
+  mockReset: () => void;
+  mockResolvedValue: (value: unknown) => void;
+}) = vi.fn();
 
 describe('OllamaService', () => {
   let service: OllamaService;
 
   beforeEach(() => {
     service = new OllamaService(BASE_URL);
-    (globalThis.fetch as any).mockReset();
+    (globalThis.fetch as unknown as { mockReset: () => void }).mockReset();
   });
 
   it('should throw an error if reader is not available', async () => {
-    (globalThis.fetch as any).mockResolvedValue({
+    (
+      globalThis.fetch as unknown as {
+        mockResolvedValue: (value: unknown) => void;
+      }
+    ).mockResolvedValue({
       status: 200,
       body: null,
     });
@@ -41,7 +48,11 @@ describe('OllamaService', () => {
     }));
     // Add a final response to indicate the end of the stream (with empty value)
     readSequence.push({ done: true, value: new Uint8Array() });
-    (globalThis.fetch as any).mockResolvedValue({
+    (
+      globalThis.fetch as unknown as {
+        mockResolvedValue: (value: unknown) => void;
+      }
+    ).mockResolvedValue({
       status: 200,
       body: {
         getReader: () => {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './index.css';
 import { ChatView } from './components/Chat';
-import { LLM_MODEL } from './constants/constants';
 import { ollamaService } from './services/api';
 import { Message } from './types/chat';
 import { isUserMessage } from './utils/util';
@@ -70,7 +69,6 @@ const App: React.FC = () => {
       .catch((error: unknown) => {
         console.error('Error:', error);
         setIsLoading(false);
-        // updateState('Error: could not generate response', false);
       });
   };
 
@@ -84,7 +82,6 @@ const App: React.FC = () => {
           isResLoading={loading}
           models={models}
           onSelectModel={(selectedModel) => {
-            // console.log('Selected model:', selectedModel);
             setModel(selectedModel);
           }}
           selectedModel={model}

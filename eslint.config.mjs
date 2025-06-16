@@ -6,6 +6,7 @@ import tsParser from '@typescript-eslint/parser';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import prettier from 'eslint-config-prettier';
+import globals from 'globals';
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
@@ -20,9 +21,7 @@ export default [
         project: './tsconfig.json',
       },
       globals: {
-        window: 'readonly',
-        document: 'readonly',
-        fetch: 'readonly',
+        ...globals.browser,
       },
     },
     plugins: {
