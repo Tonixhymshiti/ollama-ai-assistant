@@ -66,6 +66,23 @@ body,
   gap: 1rem;
 }
 
+.chat .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.model-selection {
+  display: flex;
+  align-items: center;
+}
+
+.model-select {
+  width: 8rem;
+  padding: 0.2rem;
+  border: 2px solid var(--color-secondary);
+  background-color: var(--color-primary);
+}
 
 .chat-box {
   display: flex;
